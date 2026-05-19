@@ -43,29 +43,7 @@ Kompresi JPEG bekerja di domain frekuensi lewat DCT dan kuantisasi. Proses kuant
 
 ---
 
-## 3. Struktur File Output
-
-Setelah menjalankan `watermarking.py`, semua file berikut akan dihasilkan di folder `output/`:
-
-| File Output | Tahap | Deskripsi |
-|---|---|---|
-| `tahap1_gambar_asli_grayscale.png` | 1 | Gambar asli setelah dikonversi ke grayscale |
-| `tahap2a_hasil_dct_gambar.png` | 2 | Visualisasi koefisien DCT seluruh gambar (skala log) |
-| `tahap2b_blok_piksel_vs_dct.png` | 2 | Perbandingan nilai piksel vs koefisien DCT blok 8x8 pertama |
-| `tahap3_kuantisasi.png` | 3 | Tabel kuantisasi dan hasil kuantisasi blok untuk QF 10, 50, 100 |
-| `tahap4_perbandingan_kompresi_qf.png` | 4 | Hasil kompresi gambar pada QF 10, 30, 50, 70, 90, 100 |
-| `tahap5_embed_watermark.png` | 5 | Proses embed: watermark, gambar ter-watermark, peta perbedaan |
-| `tahap6a_ekstraksi_watermark_semua_qf.png` | 6 | Watermark hasil ekstraksi untuk semua 10 QF |
-| `tahap6b_gambar_terkompresi_semua_qf.png` | 6 | Gambar terkompresi untuk semua 10 QF |
-| `tahap7a_grafik_ber.png` | 7 | Grafik BER vs Quality Factor |
-| `tahap7b_grafik_nc.png` | 7 | Grafik NC vs Quality Factor |
-| `tahap7c_grafik_psnr.png` | 7 | Grafik PSNR vs Quality Factor |
-| `tahap7d_ringkasan_semua_metrik.png` | 7 | Ringkasan ketiga metrik dalam satu figure |
-| `watermarked_original.png` | 5 | File gambar ter-watermark sebelum kompresi |
-
----
-
-## 4. Tahap 1 - Load & Persiapan Gambar
+## 3. Tahap 1 - Load & Persiapan Gambar
 
 Gambar input (`foto_kakey.png`) dibuka pakai PIL lalu dikonversi ke mode **grayscale**. Konversi ke grayscale mempermudah pemrosesan karena hanya ada satu kanal intensitas piksel dengan nilai 0-255, tanpa perlu menangani 3 kanal RGB sekaligus.
 
@@ -91,7 +69,7 @@ img_array = np.array(img, dtype=np.float64)
 
 ---
 
-## 5. Tahap 2 - DCT (Discrete Cosine Transform)
+## 4. Tahap 2 - DCT (Discrete Cosine Transform)
 
 DCT adalah transformasi matematika yang mengubah sinyal dari **domain spasial** (nilai piksel) ke **domain frekuensi**. JPEG menggunakan DCT pada blok 8x8 piksel.
 
@@ -133,7 +111,7 @@ Kiri: nilai piksel blok 8x8 pertama. Kanan: koefisien DCT dari blok yang sama. T
 
 ---
 
-## 6. Tahap 3 - Kuantisasi
+## 5. Tahap 3 - Kuantisasi
 
 Kuantisasi adalah proses **pembulatan** koefisien DCT menggunakan tabel pembagi. Ini adalah inti dari sifat lossy pada JPEG karena koefisien yang kecil setelah dibagi akan dibulatkan ke nol, sehingga banyak detail terutama di frekuensi tinggi yang hilang secara permanen.
 
@@ -170,7 +148,7 @@ Baris atas: tabel kuantisasi untuk QF 10, 50, 100, semakin cerah berarti nilai p
 
 ---
 
-## 7. Tahap 4 - Simulasi Kompresi JPEG
+## 6. Tahap 4 - Simulasi Kompresi JPEG
 
 Kompresi JPEG secara lengkap melibatkan konversi warna, DCT per blok 8x8, kuantisasi, zigzag scan, run-length encoding, sampai Huffman coding. Di proyek ini seluruh proses tersebut disimulasikan lewat PIL:
 
@@ -202,7 +180,7 @@ Artefak "blocking" terlihat jelas pada QF=10, yaitu efek kotak-kotak 8x8 yang mu
 
 ---
 
-## 8. Tahap 5 - Embed Watermark (LSB)
+## 7. Tahap 5 - Embed Watermark (LSB)
 
 Metode LSB menyisipkan watermark dengan **mengganti bit paling kecil** (bit ke-0) dari setiap nilai piksel dengan satu bit watermark. Karena bit ini hanya mengubah nilai piksel sebesar maksimal 1, perubahannya tidak terlihat oleh mata manusia.
 
@@ -258,7 +236,7 @@ Dari kiri ke kanan: gambar asli, watermark biner pola kotak-kotak, gambar ter-wa
 
 ---
 
-## 9. Tahap 6 - Ekstraksi & Evaluasi per QF
+## 8. Tahap 6 - Ekstraksi & Evaluasi per QF
 
 Setelah gambar ter-watermark dikompres dengan JPEG pada berbagai QF, watermark diekstrak kembali dengan cara mengambil bit LSB setiap piksel:
 
@@ -292,7 +270,7 @@ Perlu diperhatikan bahwa gambar terkompresi QF 50 ke atas secara visual sudah te
 
 ---
 
-## 10. Tahap 7 - Grafik Evaluasi Metrik
+## 9. Tahap 7 - Grafik Evaluasi Metrik
 
 ### Grafik BER vs Quality Factor
 
@@ -318,7 +296,7 @@ PSNR naik seiring QF yang lebih tinggi karena kuantisasi yang lebih ringan mengh
 
 ---
 
-## 11. Tabel Hasil Lengkap
+## 10. Tabel Hasil Lengkap
 
 | QF | BER | NC | PSNR (dB) | Status |
 |:---:|:---:|:---:|:---:|:---:|
@@ -337,7 +315,7 @@ PSNR naik seiring QF yang lebih tinggi karena kuantisasi yang lebih ringan mengh
 
 ---
 
-## 12. Analisis
+## 11. Analisis
 
 Kompresi JPEG bekerja begini: gambar dibagi blok 8x8, lalu DCT dilakukan per blok, koefisien DCT dibagi tabel kuantisasi dan dibulatkan ke bilangan bulat, kemudian invers DCT menghasilkan nilai piksel yang **sedikit berbeda** dari aslinya.
 
@@ -347,7 +325,7 @@ QF 100 berhasil karena tabel kuantisasinya pakai nilai pembagi yang sangat kecil
 
 ---
 
-## 13. Cara Menjalankan
+## 12. Cara Menjalankan
 
 ### Pertama-tama
 
