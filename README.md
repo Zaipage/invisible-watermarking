@@ -350,7 +350,7 @@ QF 100 berhasil karena tabel kuantisasinya pakai nilai pembagi yang sangat kecil
 
 ## 13. Cara Menjalankan
 
-### Prasyarat
+### Pertama-tama
 
 ```bash
 pip install numpy pillow matplotlib scipy
