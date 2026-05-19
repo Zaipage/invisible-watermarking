@@ -1,10 +1,4 @@
-# Watermarking Digital dengan Metode LSB pada Domain Spasial + Analisis Kompresi JPEG
-
-Proyek ini mengimplementasikan watermarking digital pakai metode **LSB (Least Significant Bit)** pada gambar grayscale, lalu mengevaluasi ketahanan watermark terhadap kompresi JPEG pada berbagai Quality Factor (QF). Prosesnya mencakup transformasi DCT, kuantisasi, embedding, ekstraksi, dan evaluasi metrik BER, NC, dan PSNR.
-
----
-
-## 1. Deskripsi Proyek
+## 1. Deskripsi Tugas
 
 Watermarking digital adalah teknik menyisipkan informasi tersembunyi ke dalam suatu media seperti gambar, audio, atau video tanpa mengubah kualitas visualnya secara berarti. Tujuan utamanya untuk **perlindungan hak cipta**, **autentikasi**, dan **pelacakan distribusi** konten digital.
 
