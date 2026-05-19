@@ -18,8 +18,7 @@ Ketahanan watermark dievaluasi dengan mengkompres citra menggunakan kompresi JPE
 invisible-watermarking/
 ├── watermarking/
 │   └── Watermarking_18224054_KaylaFiyazaNZ.py
-├── images/
-│   └── foto_kakey.jpeg
+├── foto_kakey.png
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -84,7 +83,7 @@ pip install numpy pillow matplotlib scipy
 python watermarking/Watermarking_18224054_KaylaFiyazaNZ.py
 ```
 
-Pastikan file `foto_kakey.jpeg` berada di folder `images/`.
+Pastikan file `foto_kakey.png` berada di folder utama repo.
 
 ---
 
