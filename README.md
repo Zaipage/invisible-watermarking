@@ -1,6 +1,6 @@
 # Watermarking Digital dengan Metode LSB pada Domain Spasial + Analisis Kompresi JPEG
 
-> Proyek ini mengimplementasikan watermarking digital menggunakan metode **LSB (Least Significant Bit)** pada gambar grayscale, kemudian mengevaluasi ketahanan (*robustness*) watermark terhadap kompresi JPEG pada berbagai *Quality Factor* (QF). Seluruh proses mencakup transformasi DCT, kuantisasi, embedding, ekstraksi, dan evaluasi metrik BER, NC, dan PSNR.
+> Tugas ini mengimplementasikan watermarking digital menggunakan metode **LSB (Least Significant Bit)** pada gambar grayscale, kemudian mengevaluasi ketahanan (*robustness*) watermark terhadap kompresi JPEG pada berbagai *Quality Factor* (QF). Seluruh proses mencakup transformasi DCT, kuantisasi, embedding, ekstraksi, dan evaluasi metrik BER, NC, dan PSNR.
 
 ---
 
@@ -22,11 +22,11 @@
 
 ---
 
-## 1. Deskripsi Proyek
+## 1. Deskripsi Tugas
 
 Watermarking digital adalah teknik menyisipkan informasi tersembunyi (*watermark*) ke dalam suatu media (gambar, audio, video) tanpa mengubah kualitas visualnya secara signifikan. Tujuannya antara lain untuk **perlindungan hak cipta**, **autentikasi**, dan **pelacakan distribusi** konten digital.
 
-Proyek ini menggunakan pendekatan **LSB (Least Significant Bit)** — metode paling sederhana dalam watermarking domain spasial — kemudian menguji seberapa tahan watermark tersebut setelah gambar dikompres menggunakan algoritma **JPEG** pada *Quality Factor* 10 hingga 100.
+Proyek ini menggunakan pendekatan **LSB (Least Significant Bit)** — metode paling sederhana dalam watermarking domain spasial, kemudian menguji seberapa tahan watermark tersebut setelah gambar dikompres menggunakan algoritma **JPEG** pada *Quality Factor* 10 hingga 100.
 
 **Mengapa LSB rentan terhadap JPEG?**
 Kompresi JPEG bekerja di domain frekuensi (via DCT + kuantisasi). Proses kuantisasi secara agresif membulatkan koefisien frekuensi tinggi, yang ketika dikembalikan ke domain spasial akan mengubah nilai LSB piksel. Inilah mengapa watermark LSB mudah hancur oleh JPEG.
@@ -127,11 +127,11 @@ Di mana:
 - $N$ = ukuran blok (8)
 
 **Jenis koefisien:**
-- **Koefisien DC** — posisi $(0,0)$, merepresentasikan **nilai rata-rata** seluruh blok. Nilainya besar karena mengandung informasi energi utama.
-- **Koefisien AC** — posisi lainnya (63 koefisien), merepresentasikan **variasi frekuensi** dari rendah ke tinggi. Frekuensi tinggi = detail halus, frekuensi rendah = kontur besar.
+- **Koefisien DC** - posisi $(0,0)$, merepresentasikan **nilai rata-rata** seluruh blok. Nilainya besar karena mengandung informasi energi utama.
+- **Koefisien AC** - posisi lainnya (63 koefisien), merepresentasikan **variasi frekuensi** dari rendah ke tinggi. Frekuensi tinggi = detail halus, frekuensi rendah = kontur besar.
 
 **Contoh pada blok 8×8 pertama gambar:**
-Blok pertama gambar (pojok kiri atas) bernilai seragam 134 di semua piksel. Hasilnya, DCT hanya menghasilkan satu koefisien DC = 1072 dan semua koefisien AC = 0 — karena tidak ada variasi frekuensi sama sekali pada area yang seragam.
+Blok pertama gambar (pojok kiri atas) bernilai seragam 134 di semua piksel. Hasilnya, DCT hanya menghasilkan satu koefisien DC = 1072 dan semua koefisien AC = 0, karena tidak ada variasi frekuensi sama sekali pada area yang seragam.
 
 **Implementasi:**
 Proyek ini menggunakan `scipy.fft.dctn` dengan normalisasi `ortho` untuk efisiensi, menggantikan implementasi manual yang terlalu lambat untuk gambar 1600×1600.
@@ -156,7 +156,7 @@ def apply_dct_blocks(image, block_size=8):
 
 ![Tahap 2a — Koefisien DCT Seluruh Gambar](output/tahap2a_hasil_dct_gambar.png)
 
-*Pada visualisasi DCT (skala log), area terang di pojok kiri atas menunjukkan energi tinggi pada frekuensi rendah — sesuai dengan sifat alami gambar yang sebagian besar berisi perubahan warna yang gradual, bukan detail tajam.*
+*Pada visualisasi DCT (skala log), area terang di pojok kiri atas menunjukkan energi tinggi pada frekuensi rendah - sesuai dengan sifat alami gambar yang sebagian besar berisi perubahan warna yang gradual, bukan detail tajam.*
 
 ![Tahap 2b — Blok Piksel vs Koefisien DCT](output/tahap2b_blok_piksel_vs_dct.png)
 
@@ -164,10 +164,10 @@ def apply_dct_blocks(image, block_size=8):
 
 ---
 
-## 6. Tahap 3 — Kuantisasi
+## 6. Tahap 3 - Kuantisasi
 
 **Konsep:**
-Kuantisasi adalah proses **pembulatan** koefisien DCT menggunakan tabel pembagi (*quantization table*). Inilah inti dari sifat *lossy* pada JPEG — koefisien yang kecil setelah dibagi akan dibulatkan ke nol, sehingga banyak detail (terutama frekuensi tinggi) yang hilang secara permanen.
+Kuantisasi adalah proses **pembulatan** koefisien DCT menggunakan tabel pembagi (*quantization table*). Inilah inti dari sifat *lossy* pada JPEG, koefisien yang kecil setelah dibagi akan dibulatkan ke nol, sehingga banyak detail (terutama frekuensi tinggi) yang hilang secara permanen.
 
 $$Q(u,v) = \text{round}\left(\frac{F(u,v)}{T(u,v)}\right)$$
 
@@ -211,7 +211,7 @@ Semakin kecil QF → skala semakin besar → pembagi semakin besar → lebih ban
 
 ![Tahap 3 — Kuantisasi](output/tahap3_kuantisasi.png)
 
-*Baris atas: tabel kuantisasi untuk QF 10, 50, 100 — semakin cerah = nilai pembagi semakin besar. Baris bawah: blok DCT setelah kuantisasi — QF rendah membuat hampir semua koefisien menjadi nol.*
+*Baris atas: tabel kuantisasi untuk QF 10, 50, 100 (semakin cerah) = nilai pembagi semakin besar. Baris bawah: blok DCT setelah kuantisasi - QF rendah membuat hampir semua koefisien menjadi nol.*
 
 ---
 
@@ -244,7 +244,7 @@ def kompresi_jpeg_pil(image_array, qf):
 
 ![Tahap 4 — Perbandingan Kompresi QF](output/tahap4_perbandingan_kompresi_qf.png)
 
-*Terlihat jelas artefak "blocking" pada QF=10 — efek kotak-kotak 8×8 yang muncul karena kuantisasi agresif. Semakin tinggi QF, semakin halus hasilnya.*
+*Terlihat jelas artefak "blocking" pada QF=10 - efek kotak-kotak 8×8 yang muncul karena kuantisasi agresif. Semakin tinggi QF, semakin halus hasilnya.*
 
 ---
 
@@ -298,7 +298,7 @@ for i in range(0, H, 32):
 | MSE (asli vs watermarked) | 0.5006 |
 | PSNR (asli vs watermarked) | **51.14 dB** |
 
-> PSNR 51.14 dB mengkonfirmasi bahwa perubahan akibat watermark **tidak terlihat secara visual** — nilai di atas 40 dB umumnya dianggap tidak dapat dibedakan oleh mata manusia.
+> PSNR 51.14 dB mengkonfirmasi bahwa perubahan akibat watermark **tidak terlihat secara visual** - nilai di atas 40 dB umumnya dianggap tidak dapat dibedakan oleh mata manusia.
 
 **Output:**
 
