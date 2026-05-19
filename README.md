@@ -125,11 +125,11 @@ def apply_dct_blocks(image, block_size=8):
 
 ![Tahap 2a - Koefisien DCT Seluruh Gambar](output/tahap2a_hasil_dct_gambar.png)
 
-*Pada visualisasi DCT (skala log), area terang di pojok kiri atas menunjukkan energi tinggi pada frekuensi rendah. Ini sesuai dengan sifat alami gambar yang sebagian besar berisi perubahan warna yang gradual, bukan detail tajam.*
+Pada visualisasi DCT (skala log), area terang di pojok kiri atas menunjukkan energi tinggi pada frekuensi rendah. Ini sesuai dengan sifat alami gambar yang sebagian besar berisi perubahan warna yang gradual, bukan detail tajam.
 
 ![Tahap 2b - Blok Piksel vs Koefisien DCT](output/tahap2b_blok_piksel_vs_dct.png)
 
-*Kiri: nilai piksel blok 8x8 pertama. Kanan: koefisien DCT dari blok yang sama. Terlihat energi terkonsentrasi di koefisien DC (kiri atas), sedangkan koefisien AC nilainya mendekati nol.*
+Kiri: nilai piksel blok 8x8 pertama. Kanan: koefisien DCT dari blok yang sama. Terlihat energi terkonsentrasi di koefisien DC (kiri atas), sedangkan koefisien AC nilainya mendekati nol.
 
 ---
 
@@ -160,13 +160,13 @@ Quality Factor (QF) menentukan seberapa agresif kuantisasi dilakukan. Semakin ke
 | 50 | 1 | 63 (98%) | Blok seragam, hanya DC tersisa |
 | 100 | 1 | 63 (98%) | Blok seragam, sama hasilnya |
 
-> **Catatan:** Blok 8x8 pertama pada gambar ini kebetulan seragam (semua piksel bernilai 134), jadi hanya koefisien DC yang bertahan di semua QF. Pada blok dengan variasi piksel, QF yang lebih tinggi akan mempertahankan jauh lebih banyak koefisien.
+**Catatan:** Blok 8x8 pertama pada gambar ini kebetulan seragam (semua piksel bernilai 134), jadi hanya koefisien DC yang bertahan di semua QF. Pada blok dengan variasi piksel, QF yang lebih tinggi akan mempertahankan jauh lebih banyak koefisien.
 
 **Output:**
 
 ![Tahap 3 - Kuantisasi](output/tahap3_kuantisasi.png)
 
-*Baris atas: tabel kuantisasi untuk QF 10, 50, 100, semakin cerah berarti nilai pembagi semakin besar. Baris bawah: blok DCT setelah kuantisasi, QF rendah membuat hampir semua koefisien jadi nol.*
+Baris atas: tabel kuantisasi untuk QF 10, 50, 100, semakin cerah berarti nilai pembagi semakin besar. Baris bawah: blok DCT setelah kuantisasi, QF rendah membuat hampir semua koefisien jadi nol.
 
 ---
 
@@ -198,7 +198,7 @@ def kompresi_jpeg_pil(image_array, qf):
 
 ![Tahap 4 - Perbandingan Kompresi QF](output/tahap4_perbandingan_kompresi_qf.png)
 
-*Artefak "blocking" terlihat jelas pada QF=10, yaitu efek kotak-kotak 8x8 yang muncul akibat kuantisasi agresif. Semakin tinggi QF, semakin halus hasilnya.*
+Artefak "blocking" terlihat jelas pada QF=10, yaitu efek kotak-kotak 8x8 yang muncul akibat kuantisasi agresif. Semakin tinggi QF, semakin halus hasilnya.
 
 ---
 
@@ -246,13 +246,13 @@ for i in range(0, H, 32):
 | MSE (asli vs watermarked) | 0.5006 |
 | PSNR (asli vs watermarked) | **51.14 dB** |
 
-> PSNR 51.14 dB membuktikan bahwa perubahan akibat watermark **tidak terlihat secara visual**. Nilai di atas 40 dB umumnya dianggap tidak bisa dibedakan oleh mata manusia.
+PSNR 51.14 dB membuktikan bahwa perubahan akibat watermark **tidak terlihat secara visual**. Nilai di atas 40 dB umumnya dianggap tidak bisa dibedakan oleh mata manusia.
 
 **Output:**
 
 ![Tahap 5 - Embed Watermark LSB](output/tahap5_embed_watermark.png)
 
-*Dari kiri ke kanan: gambar asli, watermark biner pola kotak-kotak, gambar ter-watermark yang secara visual identik dengan aslinya, dan peta perbedaan yang dikali x100 supaya terlihat. Perubahan maksimalnya hanya 1 nilai piksel.*
+Dari kiri ke kanan: gambar asli, watermark biner pola kotak-kotak, gambar ter-watermark yang secara visual identik dengan aslinya, dan peta perbedaan yang dikali x100 supaya terlihat. Perubahan maksimalnya hanya 1 nilai piksel.
 
 ![Gambar Ter-Watermark](output/watermarked_original.png)
 
@@ -282,13 +282,13 @@ Mengukur kualitas gambar terkompresi dibanding gambar asli. Satuannya dB, semaki
 
 ![Tahap 6a - Ekstraksi Watermark Semua QF](output/tahap6a_ekstraksi_watermark_semua_qf.png)
 
-*Bingkai **merah** berarti watermark gagal diekstrak (BER > 0.1 atau NC < 0.9), bingkai **hijau** berarti berhasil. Pada QF 10-90 pola kotak-kotak watermark rusak parah sampai jadi noise acak. Hanya pada QF 100 polanya masih terbaca dengan jelas.*
+Bingkai **merah** berarti watermark gagal diekstrak (BER > 0.1 atau NC < 0.9), bingkai **hijau** berarti berhasil. Pada QF 10-90 pola kotak-kotak watermark rusak parah sampai jadi noise acak. Hanya pada QF 100 polanya masih terbaca dengan jelas.
 
 **Output - Gambar terkompresi untuk semua QF:**
 
 ![Tahap 6b - Gambar Terkompresi Semua QF](output/tahap6b_gambar_terkompresi_semua_qf.png)
 
-*Perlu diperhatikan bahwa gambar terkompresi QF 50 ke atas secara visual sudah terlihat bagus, tapi watermark di dalamnya sudah hancur karena LSB-nya telah diubah oleh kuantisasi JPEG.*
+Perlu diperhatikan bahwa gambar terkompresi QF 50 ke atas secara visual sudah terlihat bagus, tapi watermark di dalamnya sudah hancur karena LSB-nya telah diubah oleh kuantisasi JPEG.
 
 ---
 
@@ -298,19 +298,19 @@ Mengukur kualitas gambar terkompresi dibanding gambar asli. Satuannya dB, semaki
 
 ![Tahap 7a - Grafik BER](output/tahap7a_grafik_ber.png)
 
-*Batang **merah** berarti gagal (BER > 0.1), batang **hijau** berarti berhasil (BER ≤ 0.1). Pada QF 10-90 nilai BER berkisar antara 0.24-0.53, jauh di atas threshold. Hanya QF 100 (BER = 0.04) yang berhasil.*
+Batang **merah** berarti gagal (BER > 0.1), batang **hijau** berarti berhasil (BER ≤ 0.1). Pada QF 10-90 nilai BER berkisar antara 0.24-0.53, jauh di atas threshold. Hanya QF 100 (BER = 0.04) yang berhasil.
 
 ### Grafik NC vs Quality Factor
 
 ![Tahap 7b - Grafik NC](output/tahap7b_grafik_nc.png)
 
-*NC yang rendah (0.20-0.76) pada QF 10-90 menunjukkan bahwa kemiripan antara watermark asli dan watermark terekstrak memang sangat rendah. QF 100 menghasilkan NC = 0.96, sudah di atas threshold 0.9.*
+NC yang rendah (0.20-0.76) pada QF 10-90 menunjukkan bahwa kemiripan antara watermark asli dan watermark terekstrak memang sangat rendah. QF 100 menghasilkan NC = 0.96, sudah di atas threshold 0.9.
 
 ### Grafik PSNR vs Quality Factor
 
 ![Tahap 7c - Grafik PSNR](output/tahap7c_grafik_psnr.png)
 
-*PSNR naik seiring QF yang lebih tinggi karena kuantisasi yang lebih ringan menghasilkan gambar yang lebih mendekati asli. Tapi PSNR tinggi tidak menjamin watermark berhasil diekstrak, karena PSNR mengukur kualitas gambar secara keseluruhan, bukan integritas bit LSB-nya.*
+PSNR naik seiring QF yang lebih tinggi karena kuantisasi yang lebih ringan menghasilkan gambar yang lebih mendekati asli. Tapi PSNR tinggi tidak menjamin watermark berhasil diekstrak, karena PSNR mengukur kualitas gambar secara keseluruhan, bukan integritas bit LSB-nya.
 
 ### Ringkasan Semua Metrik
 
