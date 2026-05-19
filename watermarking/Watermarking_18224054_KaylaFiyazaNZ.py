@@ -8,7 +8,7 @@ import os
 # =============================================================
 # KONFIGURASI
 # =============================================================
-NAMA_FOTO      = "foto_kakey.png"   # ganti sesuai nama file foto kamu
+NAMA_FOTO      = "foto_kakey.png"
 BLOCK_SIZE     = 8                   # ukuran blok DCT (standar JPEG = 8x8)
 WATERMARK_TILE = 32                  # ukuran kotak watermark biner
 QUALITY_FACTORS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
