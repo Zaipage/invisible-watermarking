@@ -10,7 +10,6 @@ Watermarking digital adalah teknik menyisipkan informasi tersembunyi ke dalam su
 
 Proyek ini pakai pendekatan **LSB (Least Significant Bit)**, yaitu metode paling sederhana dalam watermarking domain spasial, lalu menguji seberapa tahan watermark tersebut setelah gambar dikompres pakai algoritma **JPEG** pada Quality Factor 10 sampai 100.
 
-**Kenapa LSB rentan terhadap JPEG?**
 Kompresi JPEG bekerja di domain frekuensi lewat DCT dan kuantisasi. Proses kuantisasi membulatkan koefisien frekuensi tinggi secara agresif, dan ketika dikembalikan ke domain spasial, nilai LSB piksel ikut berubah. Itulah kenapa watermark LSB mudah rusak oleh JPEG.
 
 ---
