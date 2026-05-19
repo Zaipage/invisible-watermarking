@@ -1,10 +1,10 @@
-# 🔒 Invisible Watermarking
+# Invisible Watermarking
 
 Implementasi **invisible watermarking** pada citra wajah menggunakan metode **LSB (Least Significant Bit)** dengan evaluasi ketahanan terhadap kompresi JPEG pada berbagai nilai Quality Factor (QF).
 
 ---
 
-## 📋 Deskripsi
+## Deskripsi
 
 Project ini menyisipkan watermark yang tidak terlihat oleh mata manusia ke dalam citra grayscale menggunakan teknik LSB. Watermark disisipkan pada bit paling rendah (LSB) setiap piksel sehingga perubahan visual tidak dapat dideteksi secara kasat mata.
 
@@ -12,7 +12,7 @@ Ketahanan watermark dievaluasi dengan mengkompres citra menggunakan kompresi JPE
 
 ---
 
-## 📁 Struktur File
+## Struktur File
 
 ```
 invisible-watermarking/
@@ -23,7 +23,7 @@ invisible-watermarking/
 
 ---
 
-## ⚙️ Cara Kerja
+## Cara Kerja
 
 ### 1. Load Gambar
 Citra wajah dibaca dan dikonversi ke **grayscale**.
@@ -54,7 +54,7 @@ Kualitas ekstraksi diukur menggunakan:
 
 ---
 
-## 📊 Hasil Evaluasi
+## Hasil Evaluasi
 
 | QF | BER | NC | Status |
 |---|---|---|---|
@@ -88,7 +88,7 @@ Pastikan file `foto_kakey.jpeg` berada di folder yang sama dengan script.
 
 | | |
 |---|---|
-| **Nama** | Kayla Fiyaza NZ |
+| **Nama** | Kayla Fiyaza Nawal Zaghbi |
 | **NIM** | 18224054 |
 | **Metode** | LSB (Least Significant Bit) |
 | **Bahasa** | Python 3 |
